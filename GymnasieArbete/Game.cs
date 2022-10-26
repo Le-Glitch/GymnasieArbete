@@ -7,7 +7,7 @@ public class Game
 {
     public static void StartGame()
     {
-        //Creates and 800x800 window 
+        //Creates an 800x800 window 
         Raylib.InitWindow(800, 800, "yes");
         //Sets the targeted fps
         Raylib.SetTargetFPS(60);

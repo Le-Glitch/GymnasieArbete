@@ -104,6 +104,6 @@ public class Player
 
     public void Draw()
     {
-
+        Raylib.DrawTexture(playerTexture, (int)position.X, (int)position.Y, Raylib_cs.Color.WHITE);
     }
 }
