@@ -1,3 +1,4 @@
+using System.IO;
 using System.Drawing;
 using System;
 using System.Numerics;
@@ -8,6 +9,9 @@ public class Player
 {
     float gravity;
     public Texture2D playerTexture = Raylib.LoadTexture("player-right.png");
+
+    Texture2D playerRight = Raylib.LoadTexture("player-right.png");
+    Texture2D playerLeft = Raylib.LoadTexture("player-left.png");
 
     public Vector2 position;
     Vector2 speed = new Vector2(0, 10);
@@ -24,11 +28,13 @@ public class Player
         if (Raylib.IsKeyDown(KeyboardKey.KEY_RIGHT))
         {
             speed.X = 5;
+            direction = "right";
         }
         //Moves the player to the left if the left arrow key is pressed down
         if (Raylib.IsKeyDown(KeyboardKey.KEY_LEFT))
         {
             speed.X = -5;
+            direction = "left";
         }
 
         position.X += speed.X;
@@ -61,7 +67,7 @@ public class Player
     }
 
     //Checks for collisions on the x-axis
-    public void xCollision(List<Raylib_cs.Rectangle> platforms)
+    public void XCollision(List<Raylib_cs.Rectangle> platforms)
     {
         foreach (Raylib_cs.Rectangle platform in platforms)
         {
@@ -73,10 +79,15 @@ public class Player
                 break;
             }
         }
+
+        if(position.X < 0 || position.X + playerTexture.width > 800)
+        {
+            position.X -= speed.X;
+        }
     }
 
     //Checks for collisions on the x-axis
-    public void yCollision(List<Raylib_cs.Rectangle> platforms)
+    public void YCollision(List<Raylib_cs.Rectangle> platforms)
     {
         foreach (Raylib_cs.Rectangle platform in platforms)
         {
@@ -102,8 +113,26 @@ public class Player
         }
     }
 
+    void PlayerGravity()
+    {
+        if (position.Y < Raylib.GetScreenHeight() - playerTexture.height)
+        {
+            position.Y += gravity;
+            gravity += 0.25f;
+        }
+    }
+
     public void Draw()
     {
+        if(direction == "right")
+        {
+            playerTexture = playerRight;
+        }
+        if(direction == "left")
+        {
+            playerTexture = playerLeft;
+        }
+
         Raylib.DrawTexture(playerTexture, (int)position.X, (int)position.Y, Raylib_cs.Color.WHITE);
     }
 }

@@ -29,8 +29,14 @@ public class Game
 
         while (!Raylib.WindowShouldClose())
         {
+            platform.SetPlaforms();
+
             player.HorizontalMovement();
+            player.XCollision(platform.platforms);
+
             player.VerticleMovement();
+            player.Gravity();
+            player.YCollision(platform.platforms);
 
             Raylib.BeginDrawing();
 
