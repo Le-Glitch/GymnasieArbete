@@ -69,6 +69,7 @@ public class Player
     //Checks for collisions on the x-axis
     public void XCollision(List<Raylib_cs.Rectangle> platforms)
     {
+        //Checks collisions with platforms
         foreach (Raylib_cs.Rectangle platform in platforms)
         {
             collisionCheckHor = Raylib.CheckCollisionRecs(platform, new Raylib_cs.Rectangle((int)position.X, (int)position.Y, playerTexture.width, playerTexture.height));
@@ -80,55 +81,50 @@ public class Player
             }
         }
 
-        if(position.X < 0 || position.X + playerTexture.width > 800)
+        //Checks collisions with the edges of the screen
+        if (position.X < 0 || position.X + playerTexture.width > 800)
         {
             position.X -= speed.X;
         }
     }
 
-    //Checks for collisions on the x-axis
+    //Checks for collisions on the y-axis
     public void YCollision(List<Raylib_cs.Rectangle> platforms)
     {
+        //Checks collisions with platforms
         foreach (Raylib_cs.Rectangle platform in platforms)
         {
+            //First checks if there is a collision
             collisionCheckVer = Raylib.CheckCollisionRecs(platform, new Raylib_cs.Rectangle((int)position.X, (int)position.Y, playerTexture.width, playerTexture.height));
+            //Then checks whether the collision is occuring from above or below 
             if (collisionCheckVer)
             {
-                if (position.X + playerTexture.width > platform.x && position.X < platform.x + platform.width)
+                if (position.Y + playerTexture.height < platform.y + platform.height / 2)
                 {
-                    if (position.Y + playerTexture.height < platform.y + platform.height / 2)
-                    {
-                        position.Y = platform.y - playerTexture.height;
-                        gravity = 0;
-                        isJumping = false;
-                    }
-                    else if (position.Y > platform.y + platform.height / 2)
-                    {
-                        position.Y += speed.Y;
-                        speed.Y /= 2;
-                    }
+                    position.Y = platform.y - playerTexture.height;
+                    gravity = 0;
+                    isJumping = false;
                 }
+                else if (position.Y > platform.y + platform.height / 2)
+                {
+                    position.Y += speed.Y;
+                    speed.Y /= 2;
+                }
+                
                 break;
             }
         }
     }
 
-    void PlayerGravity()
-    {
-        if (position.Y < Raylib.GetScreenHeight() - playerTexture.height)
-        {
-            position.Y += gravity;
-            gravity += 0.25f;
-        }
-    }
-
+    //Draws the character
     public void Draw()
     {
-        if(direction == "right")
+        //Changes the direction that the character is facing by replacing the texture
+        if (direction == "right")
         {
             playerTexture = playerRight;
         }
-        if(direction == "left")
+        if (direction == "left")
         {
             playerTexture = playerLeft;
         }

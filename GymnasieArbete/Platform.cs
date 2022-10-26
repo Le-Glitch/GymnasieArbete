@@ -11,8 +11,9 @@ public class Platform
     {
         platforms.AddRange(new List<Raylib_cs.Rectangle>()
         {
-            new Raylib_cs.Rectangle(0, Raylib.GetScreenHeight() - 100, Raylib.GetScreenWidth(), 100)
+            new Raylib_cs.Rectangle(0, Raylib.GetScreenHeight() - 100, Raylib.GetScreenWidth(), 100),
         }
+
         );
     }
 

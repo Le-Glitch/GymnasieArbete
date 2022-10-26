@@ -8,7 +8,7 @@ public class Game
     public static void StartGame()
     {
         //Creates an 800x800 window 
-        Raylib.InitWindow(800, 800, "yes");
+        Raylib.InitWindow(1000, 800, "yes");
         //Sets the targeted fps
         Raylib.SetTargetFPS(60);
         //Makes so you can't close the window by accidentally pressing esc
@@ -18,6 +18,7 @@ public class Game
         //Sets the general volume
         Raylib.SetMasterVolume(0.3f);
 
+        //Loads in the audio file
         Music gameMusic = Raylib.LoadMusicStream("music.wav");
 
         Raylib.SetMusicVolume(gameMusic, 0.75f);
