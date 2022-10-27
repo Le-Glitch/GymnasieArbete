@@ -1,27 +1,29 @@
-using System.Drawing;
 using System;
-using System.Collections.Generic;
 using Raylib_cs;
 
 public class Platform
 {
-    public List<Raylib_cs.Rectangle> platforms = new List<Raylib_cs.Rectangle>();
-    
+    public List<Rectangle> platforms = new List<Rectangle>();
+    public Rectangle nextScreen = new Rectangle();
+    public int screen = 1;
+    public bool playerAtStart;
+
     public void SetPlaforms()
     {
-        platforms.AddRange(new List<Raylib_cs.Rectangle>()
+        platforms.AddRange(new List<Rectangle>()
         {
-            new Raylib_cs.Rectangle(0, Raylib.GetScreenHeight() - 100, Raylib.GetScreenWidth(), 100),
+            new Rectangle(0, Raylib.GetScreenHeight() - 100, Raylib.GetScreenWidth(), 100),
+            new Rectangle(0, Raylib.GetScreenHeight() - 250, 200, 150),
         }
-
         );
+
     }
 
     public void Draw()
     {
-        foreach(Raylib_cs.Rectangle platform in platforms)
+        foreach (Rectangle platform in platforms)
         {
-            Raylib.DrawRectangleRec(platform, Raylib_cs.Color.WHITE);
+            Raylib.DrawRectangleRec(platform, Color.WHITE);
         }
     }
 }
