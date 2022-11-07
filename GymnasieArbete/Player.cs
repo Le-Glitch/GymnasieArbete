@@ -1,6 +1,8 @@
 using System.IO;
+using System.Drawing;
 using System;
 using System.Numerics;
+using System.Collections.Generic;
 using Raylib_cs;
 
 public class Player
@@ -18,19 +20,6 @@ public class Player
     bool collisionCheckVer = false;
     bool isJumping = false;
     string direction = "right";
-
-    public void characterDirection()
-    {
-        //Changes the direction that the character is facing by replacing the texture
-        if (direction == "right")
-        {
-            playerTexture = playerRight;
-        }
-        if (direction == "left")
-        {
-            playerTexture = playerLeft;
-        }
-    }
 
     public void HorizontalMovement()
     {
@@ -73,17 +62,17 @@ public class Player
         if (position.Y < Raylib.GetScreenHeight() - playerTexture.height)
         {
             position.Y += gravity;
-            gravity += 0.33f;
+            gravity += 0.25f;
         }
     }
 
     //Checks for collisions on the x-axis
-    public void XCollision(List<Rectangle> platforms)
+    public void XCollision(List<Raylib_cs.Rectangle> platforms)
     {
         //Checks collisions with platforms
-        foreach (Rectangle platform in platforms)
+        foreach (Raylib_cs.Rectangle platform in platforms)
         {
-            collisionCheckHor = Raylib.CheckCollisionRecs(platform, new Rectangle((int)position.X, (int)position.Y, playerTexture.width, playerTexture.height));
+            collisionCheckHor = Raylib.CheckCollisionRecs(platform, new Raylib_cs.Rectangle((int)position.X, (int)position.Y, playerTexture.width, playerTexture.height));
             if (collisionCheckHor)
             {
                 position.X -= speed.X;
@@ -93,20 +82,20 @@ public class Player
         }
 
         //Checks collisions with the edges of the screen
-        if (position.X < 0 || position.X + playerTexture.width > Raylib.GetScreenWidth())
+        if (position.X < 0 || position.X + playerTexture.width > 800)
         {
             position.X -= speed.X;
         }
     }
 
     //Checks for collisions on the y-axis
-    public void YCollision(List<Rectangle> platforms)
+    public void YCollision(List<Raylib_cs.Rectangle> platforms)
     {
         //Checks collisions with platforms
-        foreach (Rectangle platform in platforms)
+        foreach (Raylib_cs.Rectangle platform in platforms)
         {
             //First checks if there is a collision
-            collisionCheckVer = Raylib.CheckCollisionRecs(platform, new Rectangle((int)position.X, (int)position.Y, playerTexture.width, playerTexture.height));
+            collisionCheckVer = Raylib.CheckCollisionRecs(platform, new Raylib_cs.Rectangle((int)position.X, (int)position.Y, playerTexture.width, playerTexture.height));
             //Then checks whether the collision is occuring from above or below 
             if (collisionCheckVer)
             {
@@ -121,7 +110,7 @@ public class Player
                     position.Y += speed.Y;
                     speed.Y /= 2;
                 }
-
+                
                 break;
             }
         }
@@ -130,6 +119,16 @@ public class Player
     //Draws the character
     public void Draw()
     {
-        Raylib.DrawTexture(playerTexture, (int)position.X, (int)position.Y, Color.WHITE);
+        //Changes the direction that the character is facing by replacing the texture
+        if (direction == "right")
+        {
+            playerTexture = playerRight;
+        }
+        if (direction == "left")
+        {
+            playerTexture = playerLeft;
+        }
+
+        Raylib.DrawTexture(playerTexture, (int)position.X, (int)position.Y, Raylib_cs.Color.WHITE);
     }
 }

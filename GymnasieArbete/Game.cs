@@ -27,14 +27,10 @@ public class Game
 
         Player player = new Player();
         Platform platform = new Platform();
-        bool newScreen = true;
 
         while (!Raylib.WindowShouldClose())
         {
-            if (newScreen == true)
-            {
-                platform.SetPlaforms();
-            }
+            platform.SetPlaforms();
 
             player.HorizontalMovement();
             player.XCollision(platform.platforms);
@@ -42,8 +38,6 @@ public class Game
             player.VerticleMovement();
             player.Gravity();
             player.YCollision(platform.platforms);
-
-            player.characterDirection();
 
             Raylib.BeginDrawing();
 
@@ -55,12 +49,6 @@ public class Game
             Raylib.EndDrawing();
 
             Raylib.UpdateMusicStream(gameMusic);
-
-            if (Raylib.CheckCollisionPointRec(player.position, platform.nextScreen))
-            {
-                platform.screen++;
-                newScreen = false;
-            }
         }
     }
 }
