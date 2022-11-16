@@ -7,10 +7,15 @@ public class Platform
     public Rectangle nextScreen = new Rectangle();
     public int screen = 1;
     public bool playerAtStart;
+    Rectangle nothing = new Rectangle(0, 0, 0, 0);
 
     //Furthest possible jump: 345 pixels
-    public void SetPlaforms()
+    public (Rectangle, Rectangle) SetPlaforms()
     {
+        platforms.Clear();
+
+        switch(screen){
+        case(1):
         platforms.AddRange(new List<Rectangle>()
         {
             new Rectangle(0, Raylib.GetScreenHeight() - 100, Raylib.GetScreenWidth(), 100),
@@ -24,6 +29,10 @@ public class Platform
         }
         );
 
+                return (new Rectangle(Raylib.GetScreenWidth(), 0, 1, 200), nothing);
+        
+        }
+        return (nothing, nothing);
     }
 
     public void Draw()

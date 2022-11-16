@@ -127,6 +127,11 @@ public class Player
         }
     }
 
+    public Rectangle UpdatePos()
+    {
+        return new Rectangle(position.X, position.Y, playerTexture.width, playerTexture.height);
+    }
+
     //Draws the character
     public void Draw()
     {

@@ -26,14 +26,20 @@ public class Game
         Raylib.PlayMusicStream(gameMusic);
 
         Player player = new Player();
+        Rectangle playerRect;
         Platform platform = new Platform();
         bool newScreen = true;
 
+        Rectangle nextScreen = new Rectangle(0, 0, 0, 0);
+        Rectangle prevScreen;
+
         while (!Raylib.WindowShouldClose())
         {
+            playerRect = player.UpdatePos();
+
             if (newScreen == true)
             {
-                platform.SetPlaforms();
+                (nextScreen, prevScreen) = platform.SetPlaforms();
             }
 
             player.HorizontalMovement();
@@ -56,7 +62,7 @@ public class Game
 
             Raylib.UpdateMusicStream(gameMusic);
 
-            if (Raylib.CheckCollisionPointRec(player.position, platform.nextScreen))
+            if (Raylib.CheckCollisionRecs(playerRect, platform.nextScreen))
             {
                 platform.screen++;
                 newScreen = false;
